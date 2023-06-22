@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shop',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +128,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+
+# MANAGING MEDIA
+# Path where media is stored'
+MEDIA_ROOT = BASE_DIR / 'media'
+# Base url to serve media files
+MEDIA_URL = '/media/'
