@@ -1,0 +1,6 @@
+.about-us-paragraph{
+    color: rgba(255, 255, 255, 0.637);
+}
+.about-us-paragraph:last-of-type {
+    color: white;
+}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}
+{{product.product_name}} 
+{% endblock title %} 
+{% block body %} 
+{% block main %}
+<div class="container product-container">
+    <div class="row">
+  <div class="col-md-4">
+    <div class="row">
+        <div id="carouselExampleInterval" class="carousel slide product-carousel-product-page" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-image-container carousel-item active" data-bs-interval="10000">
+                <img src="/media/{{product.image1}}" class="d-block w-100 product-image-product-page" alt="{{product.product_name}}">
+              </div>
+              <div class="carousel-image-container carousel-item" data-bs-interval="2000">
+                <img src="/media/{{product.image2}}" class="d-block w-100 product-image-product-page" alt="{{product.product_name}}">
+              </div>
+              <div class="carousel-image-container carousel-item">
+                <img src="/media/{{product.image3}}" class="d-block w-100 product-image-product-page" alt="{{product.product_name}}">
+              </div>
+            </div>
+            <div class="row product-img-carousel-control-container">
+            <button class="carousel-control-prev product-img-carousel-control" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next product-img-carousel-control" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <h3 class="product_name" id="namepr-{{product.pk}}">{{product.product_name}}</h3>
+    <p>namepr-{{product.pk}}</p>
+    <p class="product_description">{{product.desc}}</p>
+    <h4 class="text-white font-weight-bold mt-4">NRs. <span class="product_price" >{{product.price}}</span></h4>
+    <div class="row-md-4 buynow-addtocart-btn-row">
+      <button class="btn btn-outline-light">Buy Now &nbsp; <i class="fa-solid fa-money-bill"></i></button>
+      <button class="btn btn-outline-light add-to-cart-btn add-to-cart-btn-productview" id="pr-{{product.pk}}">Add to Cart &nbsp; <i class="fa-solid fa-cart-shopping"></i></button>
+  </div>
+  </div>
+</div>
+</div>
+
+{% endblock main %} {% endblock body %}

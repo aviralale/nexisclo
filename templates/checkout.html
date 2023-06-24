@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 
+Checkout
+{% endblock title %}
+
+{% block links %}
+<link rel="stylesheet" href="{%static 'css/checkout.css' %}">
+{% endblock links %}
+
+{% block body %}
+
+{% block main %}
+<div class="container container-checkout mb-4">
+    <div class="col mt-4">
+    <h2 class="text-white font-weight-bold">Step 1 - NexisClo Checkout - Review Your Cart Items</h2>
+    <div>
+        <ol class="list-group list-group-numbered" id="items">
+            
+          </ol>
+    </div>
+</div>
+<div class="col mt-4">
+<h2 class="text-white font-weight-bold">Step 2 - Provide Details</h2>
+<form class="row g-3" method="post" action='/checkout/'>
+  {% csrf_token %}
+  <input type="hidden" name="itemsJson" id="itemsJson">
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label">Name<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="name" id="name" required>
+    </div>
+    <div class="col-md-6">
+      <label for="inputEmail4" class="form-label">Email<span class="text-danger">*</span></label>
+      <input type="email" class="form-control" name="email" id="inputEmail4" required>
+    </div>
+    <div class="col-12">
+      <label for="inputZip" class="form-label" >Phone Number<span class="text-danger">*</span></label>
+      <input type="tel" class="form-control" name="phone" id="inputZip" placeholder="+977-98XXXXXXXX" required>
+    </div>
+    <div class="col-md-6">
+      <label for="inputAddress" class="form-label">Address<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="address1" id="inputAddress" placeholder="1234 Main St" required>
+    </div>
+    <div class="col-md-6">
+      <label for="inputAddress2" class="form-label">Address 2</label>
+      <input type="text" class="form-control" name="address2" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    </div>
+    <div class="col-md-6">
+      <label for="inputCity" class="form-label">City<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="city" id="inputCity" required>
+    </div>
+    <div class="col-md-4">
+      <label for="inputState" class="form-label">State<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="state" id="inputState" placeholder="e.g. Bagmati Province" required>
+    </div>
+    <div class="col-md-2">
+      <label for="inputZip" class="form-label" >Zip<span class="text-danger">*</span></label>
+      <input type="number" class="form-control" name="zip_code" id="inputZip" placeholder="e.g. 10300" required>
+    </div>
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck">
+        <label class="form-check-label" for="gridCheck" required>
+          The above details are correct.
+        </label>
+      </div>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Place Order</button>
+    </div>
+  </form>
+</div>
+</div>
+{% endblock main %}
+
+
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'js/checkout.js' %}"></script>
+<script>
+  $('#itemsJson').val(JSON.stringify(cart));
+{% if thank %}
+alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
+localStorage.clear();
+document.location = "/";
+{% endif %}
+</script>
+{% endblock js %}

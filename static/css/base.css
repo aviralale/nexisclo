@@ -2,11 +2,17 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+  color: white;
+
 }
+
 body{
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif !important;
 }
+
+
 nav{
   width: 100%;
   z-index: 9999999;
@@ -45,17 +51,9 @@ footer {
   background: #212529;
   width: 100%;
 }
-*{
-  margin: 0;
-  padding: 0;
-}
-body{
-  margin: 0;
-  padding: 0;
-}
 nav{
   width: 100%;
-  z-index: 9999999;
+  z-index: 2;
 }
 body {
   font-family: Rubik,Arial,sans-serif;
@@ -90,10 +88,109 @@ a:hover {
 footer {
   background: #212529;
   width: 100%;
-
 }
 
 #cart{
   position: absolute;
-  right: 10%;
+    color: white;
+  font-size: 1.2rem;
+}
+
+#cart-item-count{
+  background: red;
+  opacity: 0.85;
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+  font-size: .69rem;
+  position: absolute;
+  top: -0.4em;
+  right: -0.5em;
+}
+
+#cart-button{
+  outline: none;
+  width: 2rem;
+  display: grid;
+  height: 2rem;
+  place-items: center;
+  position: fixed;
+  bottom: 10px;
+  right: 50px;
+  z-index: 2;
+  background-color: #EB6264;
+  border-radius: 50%;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+  box-shadow: 1px 1px 1rem black;
+}
+
+#navbar{
+  display: flex;
+  justify-content: space-between;
+}
+
+#cart-container {
+  position: relative;
+}
+
+.popover {
+  position: fixed;
+  display: none;
+  background: rgb(33,37,41);
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-width: 20em;
+  bottom: 20px;
+  right: 123px;
+  z-index: 3;
+}
+
+.popover-content {
+  color:  #f9f9f9;;
+}
+
+main{
+  margin-top: 3em;
+}
+
+.img-grayscale{
+    filter: grayscale(100%);
+}
+
+.list-of-products-in-cart{
+  text-align: justify;
+  color: rgba(255, 255, 255, 0.658);
+}
+
+.no-of-item-in-cart{
+  color: white;
+  font-weight: bold;
+}
+
+
+
+.custom-prompt {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.prompt-message {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.prompt-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.prompt-button {
+  padding: 10px 20px;
+  font-size: 16px;
 }

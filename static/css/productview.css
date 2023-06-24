@@ -1,0 +1,33 @@
+.product-container {
+    margin-top: 5em;
+}
+
+.product_name{
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.product-image-product-page{
+    width: 30em;
+}
+.product-carousel-product-page{
+    width: 30em;
+    height: 28em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.buynow-addtocart-btn-row{
+    display: flex;
+
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.product_description{
+    color: rgba(255, 255, 255, 0.75)
+}
+.product_price{
+    color: #15ff15;
+}
