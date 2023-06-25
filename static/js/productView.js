@@ -31,8 +31,9 @@ function addToCart() {
   } else {
     qty = 1;
     productName = document.getElementById('name'+idstr).innerHTML;
+    productPrice = document.getElementById('price'+idstr).innerHTML;
     console.log(productName);
-    cart[idstr] = [qty,productName];
+    cart[idstr] = [qty,productName,productPrice];
   }
 
   // Update the cart in local storage
@@ -40,7 +41,7 @@ function addToCart() {
 
   // Update the cart count on the page
   updateCartCount();
-
+  updatePopover(cart);
   console.log(cart);
 }
 

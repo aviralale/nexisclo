@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product, Contact, Order
+from .models import Product, Contact, Order, OrderUpdate
 from math import ceil
-
+import json
 # Create your views here.
 def index(request):
     # products = Product.objects.all()
@@ -66,6 +66,23 @@ def contact(request):
     return render(request,'contact.html')
 
 def tracker(request):
+    if request.method == "POST":
+        orderId = request.POST.get('orderId','')
+        email = request.POST.get('email','')
+        # return HttpResponse(f"{orderId} and {email}")
+        try:
+            order = Order.objects.filter(order_id=orderId,email=email)
+            if len(order)>0:
+                update = OrderUpdate.objects.filter(order_id=orderId)
+                updates = []
+                for item in update:
+                    updates.append({'text': item.update_desc,'time': item.timestamp})
+                    response = json.dumps([updates, order[0].items_json], default=str)
+                return HttpResponse(response)
+            else:
+                return HttpResponse('{}')
+        except Exception as e:
+            return HttpResponse('{}') 
     return render(request,'tracker.html')
 
 def search(request):
@@ -102,6 +119,8 @@ def checkout(request):
             zip_code=zip_code,
                             ))
         order.save()
+        update = OrderUpdate(name=order.name,phone=order.phone,email=order.email ,order_id=order.order_id, update_desc ="The order has been placed")
+        update.save()
         thank = True
         id = order.order_id
         return render(request,'checkout.html',{'thank':thank, 'id':id})
