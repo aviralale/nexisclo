@@ -18,7 +18,9 @@ Checkout
         <ol class="list-group list-group-numbered" id="items">
             
           </ol>
-          <button id="payment-button" class="mt-4 btn btn-outline-light">Pay with Khalti</button>
+          <div class="col-12 d-flex align-items-baseline">
+          <button id="payment-button" class="mt-4 btn btn-outline-light">Pay with Khalti</button><span class="text-danger mx-2">Pay after the order is recieved.*</span>
+        </div>
     </div>
 </div>
 <div class="col mt-4">
@@ -111,6 +113,9 @@ Checkout
             // hit merchant api for initiating verfication
             console.log(payload);
             verifyPayment(payload);
+            alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
+            localStorage.clear();
+            document.location = "/";
         },
         onError (error) {
             console.log(error);
@@ -125,7 +130,7 @@ Checkout
   var btn = document.getElementById("payment-button");
   btn.onclick = function () {
     // minimum transaction amount must be 10, i.e 1000 in paisa.
-    checkout.show({amount: 1000});
+    checkout.show({amount: totalPrice*100});
   }
 
   $('#itemsJson').val(JSON.stringify(cart));

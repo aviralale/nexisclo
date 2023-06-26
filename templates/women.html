@@ -1,16 +1,17 @@
-{% extends 'base.html' %} {% block title %} Search {% endblock title %} 
-{% load static %}
+{% extends 'base.html' %}
+{% block title %} 
+Women
+{% endblock title %}
+
 
 {% block body %}
+
 {% block main %}
-
-<!--Product Cards-->
-<h5 class='search-query-header text-white text-center' id='queryDisplay'>Search results for: <span class="text-success">{{search_query}}</span></h5>
 {% for products, range, nColumns in allProducts %}
-  <div class="product-cards-section col-12" >
-
+  <h2 class="fw-bold title-category-men text-white">Women</h2>
+  <div class="product-cards-section col-12">
     {% for i in products %}
-    <div class="container page-wrapper col-2">
+    <div class="container my-2 page-wrapper col-2">
       <div class="page-inner">
         <div class="row">
           <div class="el-wrapper">
@@ -18,7 +19,7 @@
               <img
                 class="img"
                 src="../media/{{i.image1}}"
-                alt="{{i.product_name}}"
+                alt=""
                 height="210px"
                 style="aspect-ratio: 1/1"
                 alt=""
@@ -39,7 +40,7 @@
                 <div class="h-bg-inner"></div>
               </div>
 
-              <a class="cart" id="viewprod{{i.id}}" href="../productview/{{i.id}}">
+              <a class="cart" id="viewprod{{i.id}}" href="productview/{{i.id}}">
                 <span class="price" id="pricepr-{{i.id}}">NRs. {{i.price}}</span>
                 <span class="add-to-cart">
                   <span class="txt">View Product</span>
@@ -50,7 +51,6 @@
         </div>
       </div>
     </div>
-    {% comment %} for loop counter starts from 1 {% endcomment %}
     {% if forloop.counter|divisibleby:5 and forloop.counter > 0 and not forloop.last %}
     
   </div>
@@ -63,16 +63,6 @@
 </div>
 {% endfor %} 
 {% endblock main %}
-{% endblock body %}
 
-{% block js %}
-<script>
-{% if message|length != 0 %}
-  var message = "<h3 class='search-query-header-failed text-white text-center'>No such items as <span class='text-danger'>{{message}}</span></h3><a href='/'>Go back</a>";
-  console.log(message);
-  // Or display it on the page
-  var messageElement = document.getElementById('queryDisplay');
-  messageElement.innerHTML = message;
-  {% endif %}
-</script>
-{% endblock js %}
+
+{% endblock body %}

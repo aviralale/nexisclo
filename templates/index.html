@@ -99,46 +99,6 @@
 {% for products, range, nColumns in allProducts %}
   <h2 class="fw-bold title-subcategory-index text-white mt-4">{{products.0.subcategory}}</h2>
   <div class="product-cards-section col-12">
-    {% comment %} <div class="container page-wrapper">
-      <div class="page-inner">
-        <div class="row">
-          <div class="el-wrapper">
-            <div class="box-up">
-              <button id="pr-{{products.0.id}}" class="add-to-cart-btn"><i class="fa-solid fa-cart-plus"></i></button>
-              <img
-                class="img"
-                src="media/{{products.0.image}}"
-                alt=""
-                height="210px"
-                style="aspect-ratio: 1/1"
-              />
-              <div class="img-info">
-                <div class="info-inner">
-                  <span class="p-name">{{products.0.product_name}}</span>
-                  <span class="p-company">{{product.0.category}}</span>
-                </div>
-                <div class="a-size">
-                  Available sizes : <span class="size">S , M , L , XL</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="box-down">
-              <div class="h-bg">
-                <div class="h-bg-inner"></div>
-              </div>
-
-              <a class="cart" href="#">
-                <span class="price">NRs.{{products.0.price}}</span>
-                <span class="add-to-cart">
-                  <span class="txt">View Product</span>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> {% endcomment %}
 
     {% for i in products %}
     <div class="container page-wrapper col-2">
@@ -146,7 +106,6 @@
         <div class="row">
           <div class="el-wrapper">
             <div class="box-up">
-              {% comment %} <span id = "divpr-{{i.id}}" class="divpr"><button id="pr-{{i.id}}" class="add-to-cart-btn btn bth-outline-light add-to-cart-btn-index"><i class="fa-solid fa-cart-plus"></i></button></span> {% endcomment %}
               <img
                 class="img"
                 src="media/{{i.image1}}"

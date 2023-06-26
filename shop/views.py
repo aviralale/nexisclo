@@ -35,8 +35,62 @@ def index(request):
     params = {'allProducts':allProducts}
     return render(request,'index.html',params)
 
+
+def searchMatch(query,item):
+    '''Return true only if query matches the item'''
+    if query.lower() in item.desc.lower() or query.lower() in item.subcategory.lower() or query.lower() in item.category.lower() or query.lower() in item.product_adder.lower() or query.lower() in item.product_name.lower():
+        return True    
+    return False
+
+def search(request):
+    query = request.GET.get('search')
+    allProducts = []
+    catProducts = Product.objects.values('subcategory','id')
+    cats = {item['subcategory'] for item in catProducts}
+    for cat in cats:
+        prodtemp = Product.objects.filter(subcategory=cat)
+        prod = [item for item in prodtemp if searchMatch(query, item)]
+        n = len(prod)
+        nColumns = n//5 + ceil((n/5)-(n//5))
+        if len(prod) != 0:
+            allProducts.append([prod,range(1,nColumns),nColumns])
+    params = {'allProducts':allProducts, 'search_query': query,'message': ""}
+    if len(allProducts) == 0:
+        params = {'message': query}
+    return render(request,'search.html',params)
+
+
 def base(request):
     return render(request,'base.html')
+
+def men(request):
+    allProducts = []
+    prod = Product.objects.filter(subcategory="Men")
+    n = len(prod)
+    nColumns = n//5 + ceil((n/5)-(n//5))
+    allProducts.append([prod,range(1,nColumns),nColumns])
+
+    params = {'allProducts':allProducts}
+    return render(request,'men.html',params)
+
+def women(request):
+    allProducts = []
+    prod = Product.objects.filter(subcategory="Women")
+    n = len(prod)
+    nColumns = n//5 + ceil(n/5)-(n//5)
+    allProducts.append([prod,range(1,nColumns),nColumns])
+    params = {'allProducts': allProducts}
+    return render(request,'women.html',params)
+
+def unisex(request):
+    allProducts =[]
+    prod = Product.objects.filter(subcategory="Unisex")
+    n = len(prod)
+    nColumns = n//5 +ceil(n/5)-(n//5)
+    allProducts.append([prod,range(1,nColumns),nColumns])
+    params = {'allProducts':allProducts}
+    return render(request,'unisex.html',params)
+
 
 def login(request):
     return render(request, 'login.html')
@@ -83,16 +137,14 @@ def tracker(request):
                 updates = []
                 for item in update:
                     updates.append({'text': item.update_desc,'time': item.timestamp})
-                    response = json.dumps([updates, order[0].items_json], default=str)
+                    response = json.dumps({'status':'success','updates': updates, 'itemsJson': order[0].items_json}, default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse('{}')
+                return HttpResponse('{"status": "no item"}')
         except Exception as e:
-            return HttpResponse('{}') 
+            return HttpResponse('{"status": "error" }') 
     return render(request,'tracker.html')
 
-def search(request):
-    return render(request,'search.html')
 
 def productView(request, productId):
     # Fetch the product using id

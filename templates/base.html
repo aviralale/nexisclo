@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{%static 'css/productview.css' %}">
     <link rel="stylesheet" href="{%static 'css/about.css' %}">
     <link rel="stylesheet" href="{%static 'css/contact.css' %}">
+    <link rel="stylesheet" href="{%static 'css/search.css' %}">
+    <link rel="stylesheet" href="{%static 'css/category.css' %}">
 
     <!--Khalti Static Files-->
     <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
@@ -40,6 +42,16 @@
               <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Categories
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'men_cat' %}">Men</a></li>
+                  <li><a class="dropdown-item" href="{% url 'women_cat' %}">Women</a></li>
+                  <li><a class="dropdown-item" href="{% url 'unisex_cat' %}">Unisex</a></li>
+                </ul>
+              </li>
               <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="/about">About Us</a>
             </li>
             <li class="nav-item">
@@ -49,8 +61,8 @@
               <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="/contact">Contact Us</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <form method="get" action='/search/' class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = 'search' id='search'>
             <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
           </form>
         </div>
@@ -59,7 +71,7 @@
 
 
 {% block body %}
-<main>
+<main class="mt-4">
 {% block main %}
 
 
