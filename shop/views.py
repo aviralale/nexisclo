@@ -1,8 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Product, Contact, Order, OrderUpdate
 from math import ceil
 import json
+import requests
+from django.views.decorators.csrf import csrf_exempt
+
+
+
+
 # Create your views here.
 def index(request):
     # products = Product.objects.all()
@@ -100,6 +106,7 @@ def checkout(request):
     if request.method == "POST":
         items_json = request.POST.get('itemsJson','')
         name = request.POST.get('name','')
+        amount = request.POST.get('amount','')
         email = request.POST.get('email','')
         phone = request.POST.get('phone','')
         address1 = request.POST.get('address1','')
@@ -109,6 +116,7 @@ def checkout(request):
         zip_code = request.POST.get('zip_code','')
         order = (Order(
             items_json = items_json,
+            amount = amount,
             name=name,
             email=email,
             phone=phone,
@@ -123,20 +131,50 @@ def checkout(request):
         update.save()
         thank = True
         id = order.order_id
-        return render(request,'checkout.html',{'thank':thank, 'id':id})
+        #Request Khalti to transfer the amount to your account
+        
+        # return render(request,'checkout.html',{'thank':thank, 'id':id})
     return render(request,'checkout.html')
 
 def cart(request):
     return render(request,'cart.html')
 
-def men(request):
-    return render(request,'men.html')
-
-def women(request):
-    return render(request,'women.html')
-
-def unisex(request):
-    return render(request,'unisex.html')
-
 def privacyandterms(request):
     return render(request,'privacyandterms.html')
+
+@csrf_exempt
+def verify_payment(request):
+    #Khalti post request here
+    data = request.POST
+    product_id = data['product_identity']
+    token = data['token']
+    amount = data['amount']
+
+
+    url = "https://khalti.com/api/v2/payment/verify/"
+
+    payload = {
+    'token': token,
+    'amount': amount
+    }
+
+    headers = {
+    'Authorization': 'Key test_secret_key_21706b92a8174f7d90d5d625afb540e3'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    response_data = json.loads(response.text)
+    status_code = str(response.status_code)
+
+    if status_code == '400':
+        response = JsonResponse({'status':'false',
+                                 'message': response_data['detail']
+                                 },status = 500)
+        return response
+    
+    import pprint
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(response_data)
+
+    return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)

@@ -13,8 +13,6 @@ urlpatterns = [
     path('productview/<int:productId>',views.productView,name='productview'),
     path('checkout/',views.checkout,name='checkout'),
     path('cart/',views.cart,name='cart'),
-    path('category/men/',views.men,name='men'),
-    path('category/women/',views.women,name='women'),
-    path('category/unisex/',views.unisex,name='unisex'),
     path('privacyandterms/',views.privacyandterms,name='privacyandterms'),
+    path('verify_payment/', views.verify_payment, name='verify_payment'),
 ]

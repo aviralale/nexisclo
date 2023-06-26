@@ -2,3 +2,15 @@
     margin-top: 8em;
 }
 
+#payment-button.btn-outline-light {
+    color: #5E338D !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: #5E338D !important;
+}
+#payment-button.btn-outline-light:hover {
+    color: #f8f9fa !important;
+    background-color: #5E338D !important;
+    background-image: none !important;
+    border-color: #f8f9fa !important;
+}

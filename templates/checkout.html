@@ -18,6 +18,7 @@ Checkout
         <ol class="list-group list-group-numbered" id="items">
             
           </ol>
+          <button id="payment-button" class="mt-4 btn btn-outline-light">Pay with Khalti</button>
     </div>
 </div>
 <div class="col mt-4">
@@ -25,6 +26,7 @@ Checkout
 <form class="row g-3" method="post" action='/checkout/'>
   {% csrf_token %}
   <input type="hidden" name="itemsJson" id="itemsJson">
+  <input type="hidden" name="amount" id="amount">
     <div class="col-md-6">
       <label for="inputPassword4" class="form-label">Name<span class="text-danger">*</span></label>
       <input type="text" class="form-control" name="name" id="name" required>
@@ -79,11 +81,66 @@ Checkout
 {% block js %}
 <script src="{% static 'js/checkout.js' %}"></script>
 <script>
+  //Khalti Payment JS
+  function verifyPayment(payload){
+    $.ajax({
+      url: "{%url 'verify_payment' %}",
+      type: 'POST',
+      data:payload,
+      dataType: 'json',success: function (response) {alert(response)},
+      error: function (error) {alert(error.responseJSON['message'])}
+    });
+  }
+
+
+  var config = {
+    // replace the publicKey with yours
+    "publicKey": "test_public_key_20026c4ddfb64425b9d0f05f0a801609",
+    "productIdentity": "1234567890",
+    "productName": "Dragon",
+    "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+    "paymentPreference": [
+        "KHALTI",
+        "EBANKING",
+        "MOBILE_BANKING",
+        "CONNECT_IPS",
+        "SCT",
+        ],
+    "eventHandler": {
+        onSuccess (payload) {
+            // hit merchant api for initiating verfication
+            console.log(payload);
+            verifyPayment(payload);
+        },
+        onError (error) {
+            console.log(error);
+        },
+        onClose () {
+            console.log('widget is closing');
+        }
+    }
+  };
+  
+  var checkout = new KhaltiCheckout(config);
+  var btn = document.getElementById("payment-button");
+  btn.onclick = function () {
+    // minimum transaction amount must be 10, i.e 1000 in paisa.
+    checkout.show({amount: 1000});
+  }
+
   $('#itemsJson').val(JSON.stringify(cart));
-{% if thank %}
+{% if thank %}  
 alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
 localStorage.clear();
 document.location = "/";
 {% endif %}
+var totalPriceElement = document.querySelector('#totalPrice');
+var totalPrice = parseFloat(totalPriceElement.textContent);
+var amount = document.querySelector('#amount');
+var roundedTotalPrice = Math.round(totalPrice);
+amount.value = roundedTotalPrice;
+
+
+
 </script>
 {% endblock js %}

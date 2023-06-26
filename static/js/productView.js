@@ -53,3 +53,5 @@ addToCartButtons.forEach(function (button) {
 
 // Update the cart count on page load
 updateCartCount();
+
+

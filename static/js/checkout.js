@@ -39,7 +39,7 @@ let totalStr = `<li class=" list-group-item d-flex justify-content-between align
   <div class="ms-2 me-auto">
     <div class="fw-bold">Total:</div>
   </div>
-  <p class="mb-0 opacity-100">NRs. ${totalPrice}</p>
+  <p class="mb-0 opacity-100">NRs. <span id="totalPrice">${Number(totalPrice)}</span></p>
 </li>`;
 
 $('#items').append(totalStr);

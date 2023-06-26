@@ -52,7 +52,7 @@ function updatePopover(cart) {
     }
   }
   popStr = popStr + "</div> <a href = '/checkout'> <button class='btn btn-outline-success' id='checkOut'> Checkout</button></a> <button class='btn btn-outline-danger' id='clearCart'> Clear</button> "
-  console.log(popStr);
+  // console.log(popStr);
   var popoverContentElement = document.querySelector(".popover-content");
   if (popoverContentElement) {
     popoverContentElement.innerHTML = popStr;
@@ -62,7 +62,9 @@ function updatePopover(cart) {
 }
 
 
-function clearCart() {
+function clearCart(event) {
+  event.preventDefault();
+
   cart = JSON.parse(localStorage.getItem('cart'));
   var result = confirm("Are you sure you want to clear the cart?");
   if(result){
@@ -70,6 +72,7 @@ function clearCart() {
   localStorage.clear();
   cart = {};
   updateCartCount(cart);
+  updatePopover(cart);
   }
   else{
     console.log("Clear canceled");
